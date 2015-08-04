@@ -1,5 +1,5 @@
-developers
-=======================
+Developers App
+============
 Description: Install and Quick Start Guide for SnapBack Apps Developers
 
 
@@ -11,6 +11,7 @@ Notes
 ----
 
 Add any notes you may find pertinent 
+
 
 
 Changelog
