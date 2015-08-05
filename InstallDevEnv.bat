@@ -8,14 +8,18 @@ ECHO "%1"
 set pp=c:\programdata\CDP\readme.txt
 
 IF NOT EXIST %1\NUL goto PATHERROR
+ECHO The path exists.  You may be prompted to overwrite existing files.
 
 :CONTINUE
+Echo %1 > user-root.txt
+
 cd %1
 ECHO Creating Directory Structure
 
 IF NOT EXIST CDP\NUL mkdir CDP
 cd CDP
-IF EXIST %pp% xcopy %pp% .
+
+IF EXIST %pp% xcopy %pp%
 REM ---------------------------------------
 REM - Create Directories under CDP
 REM -    Notes-Meetngs
@@ -184,14 +188,15 @@ goto END
 
 :CREATEPATH
 mkdir %1
-ECHO Folder Created.
+ECHO Folder has been Created.
 goto CONTINUE
 
 :PATHERROR
 ECHO The Supplied Path does not Exist.
-ECHO IF We Create the path it will prompt to overwrite files.
+set CREATEIT="N"
 set /P CREATEIT=Do you want me to create it? (Y/[N])?
-IF /I %CREATEIT% NEQ "N" goto CREATEPATH
+IF /I %CREATEIT%==Y goto CREATEPATH
+ECHO You selected not to Create the Path.
 goto END
 
 
@@ -201,6 +206,8 @@ ECHO InstallDevEnv [full path to install directory]
 goto END
 
 :END
+ECHO End Of Install...
 PAUSE
 CLS 
 Rem EXIT
+
