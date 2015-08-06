@@ -64,10 +64,13 @@
       function runInstall()
       {
          rtfolder=document.getElementById('pn').value;
-         File="%allusersprofile%\\cdp\\developers\\InstallDevEnv.bat ";
-         shell=new ActiveXObject("WScript.Shell");
-         var cmdln=File+rtfolder;
-         shell.run(cmdln);
+         oShell = new ActiveXObject("WScript.Shell");
+         var allusers = oShell.ExpandEnvironmentStrings( "%ALLUSERSPROFILE%" );
+         File="%allusersprofile%\\cdp\\snapback\\apps\\developers\\InstallDevEnv.bat";
+         shell=new ActiveXObject("Shell.Application");
+         //var cmdln=File+rtfolder;
+         //shell.run(cmdln, rtfolder, 0);
+         shell.ShellExecute(File.replace("%allusersprofile%", allusers), rtfolder, "", "open", "0");
       }
       function getRelativeURL()
       {
