@@ -46,6 +46,30 @@
 <!--       Add Any of Your Javascript Files Here      -->
 <!-- ************************************************ -->  
 <script type="text/javascript" src="sample-lib.js"></script>
+<script type="text/javascript">
+      function runInstall()
+      {
+         rtfolder=document.getElementById('pn').value;
+         oShell = new ActiveXObject("WScript.Shell");
+         var allusers = oShell.ExpandEnvironmentStrings( "%ALLUSERSPROFILE%" );
+         File="%allusersprofile%\\cdp\\snapback\\apps\\developers\\InstallDevEnv.bat";
+         shell=new ActiveXObject("Shell.Application");
+         //var cmdln=File+rtfolder;
+         //shell.run(cmdln, rtfolder, 0);
+         shell.ShellExecute(File.replace("%allusersprofile%", allusers), rtfolder, "", "open", "0");
+      }
+      function runModify()
+      {
+	    rtfolder=document.getElementById('pn').value;
+		//This if for dev testing
+	    File="ModifyHello.bat ";
+		// This is for OOM running
+		// File="%allusersprofile%\\cdp\\developers\\ModifyHello.bat ";
+        shell=new ActiveXObject("WScript.Shell");
+		var cmdln=File+rtfolder;
+        shell.run(cmdln);
+      }
+</script>
 <!-- ************************************************ -->  
 <!--               END: App Script Files              -->
 <!-- ************************************************ -->
@@ -61,17 +85,6 @@
 	var menuarray = new Array();
 </script>
 <script type="text/javascript">
-      function runInstall()
-      {
-         rtfolder=document.getElementById('pn').value;
-         oShell = new ActiveXObject("WScript.Shell");
-         var allusers = oShell.ExpandEnvironmentStrings( "%ALLUSERSPROFILE%" );
-         File="%allusersprofile%\\cdp\\snapback\\apps\\developers\\InstallDevEnv.bat";
-         shell=new ActiveXObject("Shell.Application");
-         //var cmdln=File+rtfolder;
-         //shell.run(cmdln, rtfolder, 0);
-         shell.ShellExecute(File.replace("%allusersprofile%", allusers), rtfolder, "", "open", "0");
-      }
       function getRelativeURL()
       {
          var relURL = "";
@@ -213,52 +226,52 @@
 	</div>
 			
     <strong>One Solution to Solve Your Technology Problems</strong>
-			<p>SnapBack is a growing collection of Apps designed to solve your technology problems quickly, easily and safely.  
-			Our Development Community is actively creating solutions available for you today and in the future. This app installs
-			the development environment so you can develop SnapBack Apps.</p>
+	
+	<p>SnapBack is a growing collection of Apps designed to solve your technology problems quickly, easily and safely. Our Development Community is actively creating solutions available for you today and in the future. This app installs the development environment so you can develop SnapBack Apps.</p>
 			
-			<strong>Development Environment Key Features</strong>
-			<ul>
-			   <li>The environment has the same folder structure and common files as production.</li>
-			   <li>The environment provides common files and functions for the developers to use.</li>
-			   <li>The developer can put the environment on their windows machine.</li>
-			   <li>The developer can work on new or existing apps</li>
-			   <li>The environment provides app templates so the developer does not need to create the User Interface</li>
-			   <li>The developer can create his own private apps</li>
+	<strong>Development Environment Key Features</strong>
+		<ul>
+		   <li>The environment has the same folder structure and common files as production.</li>
+		   <li>The environment provides common files and functions for the developers to use.</li>
+		   <li>The developer can put the environment on their windows machine.</li>
+		   <li>The developer can work on new or existing apps</li>
+		   <li>The environment provides app templates so the developer does not need to create the User Interface</li>
+		   <li>The developer can create his own private apps</li>
+		</ul>
 
-			</ul>
-
-			<strong>Why you need the Development Environment</strong><Br>
-			   <ul>
-				  <li>The Easiest way to Create or Modify SnapBack Apps.</li>
-				  <li>Provides an environment that emulates production for testing</li>
-			   </ul>
-			   <p>
-            <form>
+	<strong>Why you need the Development Environment</strong><Br>
+	   <ul>
+		  <li>The Easiest way to Create or Modify SnapBack Apps.</li>
+		  <li>Provides an environment that emulates production for testing</li>
+	   </ul>
+	
+	<p>
+        <form>
             Install Path: <input id="pn" type="text" size="60" maxlength="80" value="c:\users\public" >
-            </form>
-            </p>
-            <div id="cdpbutton1">
-            <p><button package="devinstaller" id="runApp" onclick="runInstall()">Install<br> Development<br> Environment</span></button></p> 
-            <!--  <p><button package="devinstaller" id="runApp" onclick="window.location.href='file:///c:/users/public/dev-orig/CDP/snapback/apps/sbdevelopers/CDPDevInstaller.exe'" title="Get installer!"><span style="display:inline-block">Get Installer</span></button></p> -->
-            </div>
-            <strong>Browse the Folder Structure</strong>
-				<ul>
-					<li> open an explorer window or click link below. </li>
-					<li>Go to 
-					<a id="devarea" href="C:/Users/Public/dev" target="_explorer.exe">C:/Users/Public/dev</a></li>
-				</ul>
-				<p>This is the root of the Development Environment. Browse the folder structure. 
-				The apps are developed under C:/users/public/dev/cdp/snapback/apps folder. Here you will find the templates, sample apps and common files</p>
-				
-				<strong>Create An App</strong>
-				<ul>
-					<li>Get the SnapBack Apps Development Environment - see Get Installer above</li>
-					<li>Open the Development Environment in Windows Explorer - see Browse Folders above</li>
-					<li>Copy "c:/users/public/dev/cdp/snapback/apps/helloworld/" folder to a folder in the "apps" directory and Rename the folder to "MyFirstApp" </li>
-					<li>Develop your App in the Folder "MyFirstApp" by editing the "main.html" file</li>
-					<li>Run your app by executing the "main.hta" file in your "MyFirstApp" folder</li>
-				</ul>						
+        </form>
+    </p>
+    
+	<div id="cdpbutton1">
+        <p><button package="devinstaller" id="runApp" onclick="runInstall()">Install<br> Development<br> Environment</span></button></p> 
+         <!--  <p><button package="devinstaller" id="runApp" onclick="window.location.href='file:///c:/users/public/dev-orig/CDP/snapback/apps/sbdevelopers/CDPDevInstaller.exe'" title="Get installer!"><span style="display:inline-block">Get Installer</span></button></p> -->
+    </div>
+       
+	<strong>Modify a Copy of the HelloWorld App</strong>
+	
+	<p>Make sure the Install Path above is the one you want to use.</p>
+
+	<p>The Modify button below will:
+		<ul>
+            <li>Copy the Hello World App into a new folder named MyFirstApp</li>
+			<li>Open an Explorer Window to your new App folder</li>
+		</ul>
+	</p>
+	
+	<p>Next you can edit the displaymessage.js file, changing the message to be displayed.<br>Save the files changes.<br>Then Run main.hta file from the Explorer Window.</p>
+    
+	<div id="cdpbutton2">
+        <p><button package="modapp" id="runApp2" onclick="runModify()">Modify Copy of<br> HelloWorld App</button></p> 
+    </div>						
       				
 </div><!--End Tab1-->
       				
