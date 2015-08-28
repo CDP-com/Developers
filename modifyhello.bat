@@ -1,23 +1,29 @@
 @ECHO OFF
-ECHO.
-ECHO This is a batch file to assist the developer in 
-ECHO Modifying a copy of the hello World App
-ECHO.
+REM ECHO.
+REM ECHO This is a batch file to assist the developer in 
+REM ECHO Modifying a copy of the hello World App
+REM ECHO.
 
 REM what folder to use? ""= USAGE
 REM user can pass in folder. Is it the same as last saved?
 REM if user passes in folder and it does not match the last folder
 REM what if last saved file/folder does not exist - Did not run Install
 
-IF NOT EXIST "user-root.txt" goto RUNINSTALL
-set mp=""
-for /f "tokens=* delims=" %%x in (user-root.txt) do set mp=%%x
+rem IF NOT EXIST "user-root.txt" goto SETDEFAULT
+rem set mp=""
+rem for /f "tokens=* delims=" %%x in (user-root.txt) do set mp=%%x
+rem goto CONTINUEPATH
 
-if "%1" == "" goto USAGE
+:SETDEFAULT
+set mp="c:\users\public"
+
+:CONTINUEPATH
+rem if "%1" == "" goto USAGE
 if %mp%=="" goto RUNINSTALL
-set datapath=%1
+set datapath=c:\users\public
 IF %datapath:~-1%==\ SET datapath=%datapath:~0,-1%
-if %datapath% NEQ %mp% goto MISMATCH
+if %datapath% NEQ %mp% goto USEPASS
+goto USEPASS
 
 :USEPASS
 IF NOT EXIST %datapath%\NUL goto RUNINSTALL
@@ -25,7 +31,7 @@ set ad=%datapath%\CDP\SnapBack\Apps\MyFirstApp
 IF EXIST %ad%\NUL goto FOLDEREXISTS
 IF NOT EXIST %ad%\NUL mkdir %ad%
 cd %1\CDP\SnapBack\APPs
-xcopy HelloWorld MyFirstApp\ /S
+xcopy appTemplate MyFirstApp\ /S
 explorer.exe %ad%
 goto END
 
@@ -34,40 +40,41 @@ set ad=%mp%\CDP\SnapBack\Apps\MyFirstApp
 IF EXIST %ad%\NUL goto FOLDEREXISTS
 IF NOT EXIST %ad%\NUL mkdir %ad%
 cd %1\CDP\SnapBack\APPs
-xcopy HelloWorld MyFirstApp\ /S
+xcopy appTemplate MyFirstApp\ /S
 explorer.exe %ad%
 goto END
 
 :FOLDEREXISTS
-ECHO The folder already Exists
+REM ECHO The folder already Exists
 explorer.exe %ad%
 goto END
 
 :MISMATCH
-ECHO The folder you entered is not the same as the last saved development folder.
-ECHO The last saved development folder is %mp%.
+goto USEPASS
+REM ECHO The folder you entered is not the same as the last saved development folder.
+REM ECHO The last saved development folder is %mp%.
 REM Which folder to use?
 set pu="N"
 set /P pu=Do you want to use %datapath% folder? (Y/[N])?
 IF /I %pu%==Y goto USEPASS
 set /P pu=Do you want to use %mp% folder (Y/[N])?
 IF /I %pu%==Y goto USETEXT
-ECHO You did not pick either path.
+REM ECHO You did not pick either path.
 goto END
 
 :RUNINSTALL
-ECHO You have not run the install button. Please run that button first.
-ECHO Then you can run the button to modify the Hello World App.
+REM ECHO You have not run the install button. Please run that button first.
+REM ECHO Then you can run the button to modify the Hello World App.
 goto END
 
 :USAGE
-ECHO USAGE:
-ECHO ModifyHello [full path to install directory]
-ECHO You must install the development environment before using this tool.
+REM ECHO USAGE:
+REM ECHO ModifyHello [full path to install directory]
+REM ECHO You must install the development environment before using this tool.
 goto END
 
 :END
-ECHO End Of Modify...
-PAUSE
-CLS 
+REM ECHO End Of Modify...
+REM PAUSE
+REM CLS 
 Rem EXIT
