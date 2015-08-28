@@ -3,23 +3,20 @@ ECHO.
 ECHO This is a batch file to install the SnapBack Development Environment
 ECHO.
 
-if "%1" == "" goto USAGE
-ECHO "%1"
+rem if "%1" == "" goto USAGE
+rem ECHO "%1"
+set mpath=c:\users\public
 set pp=c:\programdata\CDP\readme.txt
 
 IF NOT EXIST %1\NUL goto PATHERROR
-ECHO The path exists.  You may be prompted to overwrite existing files.
 
 :CONTINUE
-Echo %1 > user-root.txt
-
-cd %1
+cd %mpath%
 ECHO Creating Directory Structure
 
 IF NOT EXIST CDP\NUL mkdir CDP
 cd CDP
-
-IF EXIST %pp% xcopy %pp%
+IF EXIST %pp% xcopy %pp% .
 REM ---------------------------------------
 REM - Create Directories under CDP
 REM -    Notes-Meetngs
@@ -187,16 +184,15 @@ ECHO Production Folders are missing for Copying.
 goto END
 
 :CREATEPATH
-mkdir %1
-ECHO Folder has been Created.
+mkdir %mpath%
+ECHO Folder Created.
 goto CONTINUE
 
 :PATHERROR
 ECHO The Supplied Path does not Exist.
-set CREATEIT="N"
+ECHO IF We Create the path it will prompt to overwrite files.
 set /P CREATEIT=Do you want me to create it? (Y/[N])?
-IF /I %CREATEIT%==Y goto CREATEPATH
-ECHO You selected not to Create the Path.
+IF /I %CREATEIT% NEQ "N" goto CREATEPATH
 goto END
 
 
@@ -206,7 +202,6 @@ ECHO InstallDevEnv [full path to install directory]
 goto END
 
 :END
-ECHO End Of Install...
-PAUSE
+rem PAUSE
 CLS 
 Rem EXIT
